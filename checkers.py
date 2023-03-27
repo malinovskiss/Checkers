@@ -1,4 +1,4 @@
-import pygame as pg
+import pygame as pg 
 from sys import exit, argv
 from pygame.locals import *
 from board_gui import BoardGUI
