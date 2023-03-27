@@ -1,10 +1,57 @@
-import pygame as pg 
+import pygame as pg
 from sys import exit, argv
 from pygame.locals import *
 from board_gui import BoardGUI
-from game_control import GameControl 
+from game_control import GameControl
 
-def main(gamemode): 
+import pickle
+ 
+class MyClass():
+    def __init__(self, param):
+        self.param = param
+ 
+def save_object(obj):
+    try:
+        with open("data.pickle", "wb") as f:
+            pickle.dump(obj, f, protocol=pickle.HIGHEST_PROTOCOL)
+    except Exception as ex:
+        print("Error during pickling object (Possibly unsupported):", ex)
+ 
+obj = MyClass(10)
+save_object(obj)
+
+import pickle
+ 
+class MyClass():
+    def __init__(self, param):
+        self.param = param
+ 
+def load_object(filename):
+    try:
+        with open(filename, "rb") as f:
+            return pickle.load(f)
+    except Exception as ex:
+        print("Error during unpickling object (Possibly unsupported):", ex)
+ 
+obj = load_object("data.pickle")
+ 
+print(obj.param)
+print(isinstance(obj, MyClass))
+
+
+from cryptography.fernet import Fernet
+key = Fernet.generate_key()
+print("Key : ", key.decode())
+f = Fernet(key)
+encrypted_data = f.encrypt(b"This message is being encrypted and cannot be seen!")
+print("After encryption : ", encrypted_data)
+decrypted_data = f.decrypt(encrypted_data)
+print(decrypted_data)
+print("After decryption : ", decrypted_data.decode())
+
+
+
+def main(gamemode):
     # Main setup
     pg.init()
     FPS = 30
@@ -31,11 +78,11 @@ def main(gamemode):
         DISPLAYSURF.fill((0, 0, 0))
         game_control.draw_screen(DISPLAYSURF)
 
-        turn_display_text = "White's turn" if game_control.get_turn() == "W" else "Black's turn"
+        turn_display_text = "BALTIE STAIGĀ" if game_control.get_turn() == "W" else "MELNIE STAIGĀ"
         DISPLAYSURF.blit(main_font.render(turn_display_text, True, (255, 255, 255)), turn_rect)
 
         if game_control.get_winner() is not None:
-            winner_display_text = "White wins!" if game_control.get_winner() == "W" else "Black wins!"
+            winner_display_text = "BALTAIS UZVAR!" if game_control.get_winner() == "W" else "MELNAIS UZVAR!"
             DISPLAYSURF.blit(main_font.render(winner_display_text, True, (255, 255, 255)), winner_rect)
 
         # Event handling
