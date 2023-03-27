@@ -4,7 +4,7 @@ from pygame.locals import *
 from board_gui import BoardGUI
 from game_control import GameControl 
 
-def main(gamemode):
+def main(gamemode): 
     # Main setup
     pg.init()
     FPS = 30
